@@ -1,0 +1,117 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+  # RHCSA TEST
+  # v1.0.0 - 10/10/2016 - Steve Black - Configuration of VMs
+
+Vagrant.configure("2") do |config|
+
+  # BOX SETTINGS
+  config.vm.box = "centos/7"
+  config.vm.box_url = "http://atlas.hashicorp.com/centos/boxes/7"
+
+  # SERVER1 VM
+  #
+  #
+  #
+  config.vm.define "server1" do |server1|
+    # Base Settings
+    #
+    server1.vm.provider "virtualbox" do |vb|
+       vb.gui = false
+       vb.cpus = "2"
+       vb.memory = "2048"
+    end
+    
+    # SSH Settings
+    #    
+    server1.ssh.insert_key = false
+    #server1.ssh.username = "vagrant"
+    #server1.ssh.password = "vagrant"
+
+    # Network Settings
+    #
+    server1.vm.hostname="server1"
+    server1.vm.network "forwarded_port",guest:22,host:22222
+    #server1.vm.network "public_network",type:"dhcp",bridge:'en4: Thunderbolt Ethernet',auto_config:true
+    server1.vm.network "public_network",type:"dhcp",bridge:'en0: Wi-Fi (AirPort)',auto_config:true
+    server1.vm.network "private_network",ip:"192.168.1.2",auto_config:true
+
+    # Provision Settings
+    #
+    # Use Bash Shell Script
+    server1.vm.provision "shell", inline: <<-SHELL
+      sudo yum -y remove firewalld
+      sudo yum -y install wget vim iptables iptables-services
+    SHELL
+  end
+
+  # CLIENT1 VM
+  #
+  #
+  #
+    config.vm.define "client1" do |client1|
+    # Base Settings
+    #
+    client1.vm.provider "virtualbox" do |vb|
+       vb.gui = false
+       vb.memory = "2048"
+    end
+    
+    # SSH Settings
+    #    
+    client1.ssh.insert_key = false
+    #client1.ssh.username = "vagrant"
+    #client1.ssh.password = "vagrant"
+
+    # Network Settings
+    #
+    client1.vm.hostname="client1"
+    #client1.vm.network "public_network",type:"dhcp",bridge:'en4: Thunderbolt Ethernet',auto_config:true
+    client1.vm.network "public_network",type:"dhcp",bridge:'en0: Wi-Fi (AirPort)',auto_config:true
+    client1.vm.network "private_network",ip:"192.168.1.3",auto_config:true
+
+    # Provision Settings
+    #
+    # Use Bash Shell Script
+    client1.vm.provision "shell", inline: <<-SHELL
+      sudo yum -y remove firewalld
+      sudo yum -y install wget vim
+    SHELL
+  end
+
+  # CLIENT2 VM
+  #
+  #
+  #
+    config.vm.define "client2" do |client2|
+    # Base Settings
+    #
+    client2.vm.provider "virtualbox" do |vb|
+       vb.gui = false
+       vb.memory = "2048"
+    end
+
+    # SSH Settings
+    #    
+    client2.ssh.insert_key = false
+    #client2.ssh.username = "vagrant"
+    #client2.ssh.password = "vagrant"
+
+    # Network Settings
+    #
+    client2.vm.hostname="client2"
+    #client2.vm.network "public_network",type:"dhcp",bridge:'en4: Thunderbolt Ethernet',auto_config:true
+    client2.vm.network "public_network",type:"dhcp",bridge:'en0: Wi-Fi (AirPort)',auto_config:true
+    client2.vm.network "private_network",ip:"192.168.1.4",auto_config:true
+
+    # Provision Settings
+    #
+    # Use Bash Shell Script
+    client2.vm.provision "shell", inline: <<-SHELL
+      sudo yum -y install wget vim
+    SHELL
+  end
+
+# END OF VAGRANTFILE
+end
