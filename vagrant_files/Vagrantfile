@@ -32,10 +32,10 @@ Vagrant.configure("2") do |config|
     # Network Settings
     #
     server1.vm.hostname="server1"
-    server1.vm.network "forwarded_port",guest:22,host:22222
+    #server1.vm.network "forwarded_port",guest:22,host:22222
     #server1.vm.network "public_network",type:"dhcp",bridge:'en4: Thunderbolt Ethernet',auto_config:true
     server1.vm.network "public_network",type:"dhcp",bridge:'en0: Wi-Fi (AirPort)',auto_config:true
-    server1.vm.network "private_network",ip:"192.168.1.2",auto_config:true
+    server1.vm.network "private_network",ip:"10.10.10.2",auto_config:true
 
     # Provision Settings
     #
@@ -68,8 +68,8 @@ Vagrant.configure("2") do |config|
     #
     client1.vm.hostname="client1"
     #client1.vm.network "public_network",type:"dhcp",bridge:'en4: Thunderbolt Ethernet',auto_config:true
-    client1.vm.network "public_network",type:"dhcp",bridge:'en0: Wi-Fi (AirPort)',auto_config:true
-    client1.vm.network "private_network",ip:"192.168.1.3",auto_config:true
+    #client1.vm.network "public_network",type:"dhcp",bridge:'en0: Wi-Fi (AirPort)',auto_config:true
+    client1.vm.network "private_network",ip:"10.10.10.3",auto_config:true
 
     # Provision Settings
     #
@@ -102,8 +102,8 @@ Vagrant.configure("2") do |config|
     #
     client2.vm.hostname="client2"
     #client2.vm.network "public_network",type:"dhcp",bridge:'en4: Thunderbolt Ethernet',auto_config:true
-    client2.vm.network "public_network",type:"dhcp",bridge:'en0: Wi-Fi (AirPort)',auto_config:true
-    client2.vm.network "private_network",ip:"192.168.1.4",auto_config:true
+    #client2.vm.network "public_network",type:"dhcp",bridge:'en0: Wi-Fi (AirPort)',auto_config:true
+    client2.vm.network "private_network",ip:"10.10.10.4",auto_config:true
 
     # Provision Settings
     #
